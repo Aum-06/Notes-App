@@ -23,6 +23,4 @@ app.get("/", (req, res) => {
   res.send("GET request to the homepage");
 });
 
-app.listen(port, () => {
-  console.log("server running on port 3000");
-});
+module.exports = app;
