@@ -3,6 +3,9 @@ import ProfileInfo from "./ProfileInfo";
 import { useNavigate } from "react-router-dom";
 import SearchbBar from "./SearchbBar";
 import api from "../utils/api";
+import { MdLightMode, MdDarkMode } from "react-icons/md";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../Slices/themeSlice";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
@@ -40,6 +43,9 @@ const Navbar = () => {
 
     navigate("/login");
   };
+  const darkMode = useSelector((state) => state.theme.darkMode);
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="flex items-center bg-white px-10 py-6 justify-between drop-shadow-md border-[1.5px]">
@@ -52,8 +58,17 @@ const Navbar = () => {
               onClearSearch={onClearSearch}
               handleSearch={handleSearch}
             />
-            
+               <div className="flex items-center gap-4 justify-between">
+
               <ProfileInfo  userName={user?.fullName}onLogout={onLogout} />
+              <button onClick={() => dispatch(toggleTheme())} className="text-2xl">
+            {darkMode ? (
+              <MdLightMode className="toggle-theme dark:text-white size-10" />
+            ) : (
+              <MdDarkMode className="toggle-theme size-10" />
+            )}
+          </button>
+               </div>
             
           </>
         ) : (
